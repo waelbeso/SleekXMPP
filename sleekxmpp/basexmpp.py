@@ -474,7 +474,7 @@ class BaseXMPP(XMLStream):
         return ET.Element("{jabber:iq:roster}query")
 
     def make_message(self, mto, mbody=None, msubject=None, mtype=None,
-                     mhtml=None, mfrom=None, mnick=None):
+                     mhtml=None, mfrom=None, mnick=None,,mid=None):
         """
         Create and initialize a new
         :class:`~sleekxmpp.stanza.message.Message` stanza.
@@ -490,7 +490,7 @@ class BaseXMPP(XMLStream):
                       of the sender be used.
         :param mnick: Optional nickname of the sender.
         """
-        message = self.Message(sto=mto, stype=mtype, sfrom=mfrom)
+        message = self.Message(sto=mto, stype=mtype, sfrom=mfrom,sid=mid)
         message['body'] = mbody
         message['subject'] = msubject
         if mnick is not None:
@@ -524,7 +524,7 @@ class BaseXMPP(XMLStream):
         return presence
 
     def send_message(self, mto, mbody, msubject=None, mtype=None,
-                     mhtml=None, mfrom=None, mnick=None):
+                     mhtml=None, mfrom=None, mnick=None,mid=None):
         """
         Create, initialize, and send a new
         :class:`~sleekxmpp.stanza.message.Message` stanza.
@@ -541,7 +541,7 @@ class BaseXMPP(XMLStream):
         :param mnick: Optional nickname of the sender.
         """
         self.make_message(mto, mbody, msubject, mtype,
-                          mhtml, mfrom, mnick).send()
+                          mhtml, mfrom, mnick,mid).send()
 
     def send_presence(self, pshow=None, pstatus=None, ppriority=None,
                       pto=None, pfrom=None, ptype=None, pnick=None):
